@@ -1,0 +1,25 @@
+<launch>
+    <rosparam file="$(find limbo)/config/config.yaml" command="load" />
+
+    <node pkg='path_planner' type='dummy' name='dummy' output='screen'>
+        <!-- 'max_size' is size of randomly generated obstacle-->
+        <param name="max_size" type="int" value="10" />
+        <!-- 'n_obstacles' is the number of obstacles-->
+        <param name="n_obstacles" type="int" value="10" />
+        <!-- 'seed' is ramdom seed generating random map-->
+        <param name="seed" type="int" value="1" />
+        <param name="map_width" type="int" value="100" />
+        <param name="map_height" type="int" value="100" />
+        <param name="resolution" type="double" value="0.1" />
+        <param name="origin_x" type="double" value="0" />
+        <param name="origin_y" type="double" value="0" />
+        <!-- 'goal_arrived_th' is threshold to determine having arrived at goal-->
+        <param name="goal_arrived_th" type="double" value="1" />
+    </node>
+    
+    <!-- visulaization -->
+    <arg name="rviz" default="true" />
+    <group if="$(arg rviz)">
+        <node launch-prefix="nice" pkg="rviz" type="rviz" name="rviz" args="-d $(find path_planner)/rviz/debug.rviz" />
+    </group>
+</launch>
